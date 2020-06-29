@@ -29,6 +29,7 @@ media
 *$py.class 
 
 # Distribution / packaging 
+movierater/settings.py
 .Python build/ 
 develop-eggs/ 
 dist/ 
