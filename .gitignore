@@ -30,6 +30,7 @@ media
 
 # Distribution / packaging 
 movierater/settings.py
+movierater/wsgi.py
 .Python build/ 
 develop-eggs/ 
 dist/ 
