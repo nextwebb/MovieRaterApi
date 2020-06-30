@@ -7,6 +7,25 @@ class Movie(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=360)
 
+    def no_of_ratings(self):
+        ratings = Rating.objects.filter(movie=self)
+        # returns an array of rating object for a specific movie
+        # self represent an instance of a class
+        # so we're essentially checking if the ratings class, contains an instance of the movie object
+        # the filter method returns the number of movie object in the array
+        return len(ratings)
+
+    def avg_rating(self):
+        total = 0
+        ratings = Rating.objects.filter(movie=self)
+        # returns an array of rating object for a specific movie
+        for rating in ratings:
+            total += rating.stars
+        if len(ratings) > 0:
+            return total / len(ratings)
+        else:
+            return 0
+
 
 class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
