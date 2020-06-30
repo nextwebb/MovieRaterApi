@@ -3,10 +3,10 @@ from .models import Movie, Rating
 
 class MovieSerializers(serializers.ModelSerializer):
     class Meta:
-        model: Movie
-        fields: ('id','title', 'description',)
+        model= Movie
+        fields = ('id','title', 'description',)
 
 class RatingSerializers(serializers.ModelSerializer):
     class Meta:
-        model: Rating
-        fields: ('id','title', 'users',)
+        model= Rating
+        fields = ('id','movie', 'user', 'stars')
