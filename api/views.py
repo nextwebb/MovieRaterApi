@@ -5,6 +5,7 @@ from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from .models import Movie, Rating
 from .serializers import MovieSerializers, RatingSerializers, UserSerializers
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,6 +17,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializers
     authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
 
     @action(detail=True, methods=['POST'])
     def rate_movie(self, request, pk=None):
@@ -49,3 +51,14 @@ class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializers
     authentication_classes = (TokenAuthentication,)
+
+    # prevent builtin default methods
+    # using the model viewset it will be open the 5 methods
+    # create, update, Retrieve, delete, list
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'You cant update ratings like that'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    def create(self, request, *args, **kwargs):
+        response = {'message': 'You cant create ratings like that'}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
