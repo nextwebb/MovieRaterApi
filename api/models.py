@@ -46,7 +46,7 @@ class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='comments')
 
     class Meta:
-        # unique_together = ('user', 'movie')
+        unique_together = ('user', 'movie')
         index_together = ('user', 'movie')
 
     def __str__(self):

@@ -5,7 +5,7 @@ from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from .models import Movie, Rating, Comment
 from .serializers import MovieSerializers, RatingSerializers, UserSerializers, CommentSerializers
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -52,7 +52,7 @@ class MovieViewSet(viewsets.ModelViewSet):
             movie = Movie.objects.get(id=pk)
             message = request.data['message']
             user = request.user
-            print(movie, user, message, pk)
+
 
             try:
                 comment = Comment.objects.get(user=user.id, movie=movie.id)
@@ -62,7 +62,7 @@ class MovieViewSet(viewsets.ModelViewSet):
                 response = {'message': 'Comment  Updated', 'result': serializer.data}
                 return Response(response, status=status.HTTP_200_OK)
 
-            except:
+            except Comment.DoesNotExist:
                 comment = Comment.objects.create(user=user, movie=movie, message=message)
                 serializer = CommentSerializers(comment, many=False)
                 response = {'message': 'Comment created', 'result': serializer.data}
@@ -70,6 +70,20 @@ class MovieViewSet(viewsets.ModelViewSet):
         else:
             response = {'message': 'You need to provide Comment'}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['delete'], permission_classes=[IsAuthenticated] )
+    def delete_comment(self, request, pk=None):
+            movie = Movie.objects.get(id=pk)
+            try :
+                comment = Comment.objects.get(user=request.user.id, movie=movie.id)
+                print(comment)
+                comment.delete()
+                response = {'message': 'Comment  Deleted!'}
+                return Response(response, status=status.HTTP_200_OK)
+            except :
+                response = {'message': 'Cannot delete comment'}
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class RatingViewSet(viewsets.ModelViewSet):
