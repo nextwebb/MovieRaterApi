@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movie, Rating
+from .models import Movie, Rating, Comment
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -18,10 +18,18 @@ class UserSerializers(serializers.ModelSerializer):
         return user
 
 
+class CommentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'movie', 'user', 'message']
+
+
 class MovieSerializers(serializers.ModelSerializer):
+    comments = CommentSerializers(many=True)
+
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'description', 'no_of_ratings', 'avg_rating')
+        fields = ('id', 'title', 'description', 'no_of_ratings', 'avg_rating', 'comments')
 
 
 class RatingSerializers(serializers.ModelSerializer):
