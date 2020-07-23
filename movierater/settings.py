@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_on_heroku
+import django_heroku
 from decouple import config
 from dj_database_url import parse as dburl
 
@@ -83,10 +83,18 @@ WSGI_APPLICATION = 'movierater.wsgi.application'
 
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
+# DATABASES = {
+#     'default': { config('DATABASE_URL', default=default_dburl, cast=dburl),
+#     }
+# }
+
 DATABASES = {
-    'default': { config('DATABASE_URL', default=default_dburl, cast=dburl),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -128,12 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Activate Django-Heroku.
-django_on_heroku.settings(locals())
+django_heroku.settings(locals())
