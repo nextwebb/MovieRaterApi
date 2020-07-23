@@ -53,7 +53,6 @@ class MovieViewSet(viewsets.ModelViewSet):
             message = request.data['message']
             user = request.user
 
-
             try:
                 comment = Comment.objects.get(user=user.id, movie=movie.id)
                 comment.message = message

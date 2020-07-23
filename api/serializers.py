@@ -3,7 +3,6 @@ from .models import Movie, Rating, Comment
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -25,11 +24,10 @@ class CommentSerializers(serializers.ModelSerializer):
 
 
 class MovieSerializers(serializers.ModelSerializer):
-    comments = CommentSerializers(many=True)
-
+    # comments = CommentSerializers(many=True)
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'description', 'no_of_ratings', 'avg_rating', 'comments')
+        fields = ('id', 'title', 'description', 'no_of_ratings', 'avg_rating',)
 
 
 class RatingSerializers(serializers.ModelSerializer):
