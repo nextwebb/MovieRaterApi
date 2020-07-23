@@ -1,1 +1,1 @@
-web: gunicorn movierater.wsgi --log-file -
+web: gunicorn movierater.wsgi:application --preload --workers 1
