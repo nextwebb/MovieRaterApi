@@ -20,6 +20,7 @@ six = "==1.15.0"
 sqlparse = "==0.3.1"
 virtualenv = "==20.0.27"
 virtualenv-clone = "==0.5.4"
+dj-static = "*"
 
 [requires]
 python_version = "3.6"
