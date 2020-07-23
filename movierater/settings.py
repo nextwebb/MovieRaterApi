@@ -90,8 +90,12 @@ default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbedda8falhvbk',
+        'HOST': 'ec2-54-197-254-117.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'wsauakmzhdcakm',
+        'PASSWORD':'ea9a61a01eb79821b7ac5860a6ceab8e97f74a9d202e5c9f33f94b870b53674d'
     }
 }
 
