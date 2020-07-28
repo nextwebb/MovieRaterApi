@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import django_heroku
 from decouple import config
-from dj_database_url 
+import dj_database_url 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,14 +82,23 @@ WSGI_APPLICATION = 'movierater.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+# default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-# DATABASES = {
-#     'default': { config('DATABASE_URL', default=default_dburl, cast=dburl),
-#     }
-# }
+# # DATABASES = {
+# #     'default': { config('DATABASE_URL', default=default_dburl, cast=dburl),
+# #     }
+# # }
 
-DATABASES = {
+
+if config(DEBUG) == True:  #Use SQlite locally
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+    }
+else: #Use Postgress in Production
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dbedda8falhvbk',
