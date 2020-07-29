@@ -56,7 +56,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+    "http://localhost:3000", "https://moviehipe.web.app", "https://moviehipe.firebaseapp.com"
 ]
 
 ROOT_URLCONF = 'movierater.urls'
